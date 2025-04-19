@@ -1,0 +1,35 @@
+pipeline {
+    agent any
+    environment {
+        IMAGE_NAME = "mywebapp"
+    }
+    stages {
+        stage('Build') {
+            steps {
+                echo "Building Docker image..."
+                sh 'docker build -t $IMAGE_NAME .'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo "Running tests..."
+                // Add your testing scripts here
+            }
+        }
+        stage('Push to Docker Hub') {
+            steps {
+                withCredentials([string(credentialsId: 'docker-hub-password', variable: 'DOCKER_PASSWORD')]) {
+                    sh '''
+                        echo $DOCKER_PASSWORD | docker login -u your-dockerhub-username --password-stdin
+                        docker push your-dockerhub-username/$IMAGE_NAME
+                    '''
+                }
+            }
+        }
+        stage('Deploy to Kubernetes') {
+            steps {
+                sh 'kubectl apply -f k8s/deployment.yaml'
+            }
+        }
+    }
+}
