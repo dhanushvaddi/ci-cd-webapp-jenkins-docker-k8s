@@ -38,7 +38,7 @@ ci-cd-webapp-jenkins-docker-k8s/
 ## How to Use
 
 1. Clone the repository:
-   git clone https://github.com/yourusername/ci-cd-webapp-jenkins-docker-k8s.git
+   git clone https://github.com/dhanushvaddi/ci-cd-webapp-jenkins-docker-k8s.git
 
 2. Build and push Docker image:
    docker build -t your-dockerhub-username/mywebapp .
